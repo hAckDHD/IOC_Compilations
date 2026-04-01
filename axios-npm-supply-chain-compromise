@@ -1,0 +1,116 @@
+IOC(combine)
+
+NETWORK
+hxxps://models[.]litellm[.]cloud/
+hxxps://checkmarx[.]zone/
+scan.aquasecurtiy[.]org
+
+FILES
+litellm_init.pth
+~/.config/sysmon/sysmon.py
+~/.config/systemd/user/sysmon.service
+setup.js
+
+PACKAGES
+axios@1.14.1
+axios@0.30.4
+plain-crypto-js@4.2.1
+litellm==1.82.7
+litellm==1.82.8
+telnyx==4.87.1
+telnyx==4.87.2
+
+HASHES
+d2a0d5f564628773b6af7b9c11f6b86531a875bd2d186d7081ab62748a800ebb
+ceNa7wMJnNHy1kRnNCcwJaFjWX3pORLfMh7xGL8TUjg
+
+PERSISTENCE
+sysmon.service
+node-setup-*
+
+BEHAVIOR
+credential harvesting ssh keys env vars cloud creds
+
+IOC(source) individual
+
+STEPSECURITY
+https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan
+
+litellm malicious packages
+sha256 hashes
+credential exfiltration
+
+SAFEDEP
+https://safedep.io/axios-npm-supply-chain-compromise/
+
+hxxps://models[.]litellm[.]cloud/
+hxxps://checkmarx[.]zone/
+litellm_init.pth
+
+HUNTRESS
+https://www.huntress.com/blog/supply-chain-compromise-axios-npm-package
+
+axios malicious versions
+credential theft behavior
+
+SOCKET
+https://socket.dev/blog/axios-npm-package-compromised
+
+axios malicious versions
+plain-crypto-js@4.2.1
+
+SOCKET FILE ANALYSIS
+https://socket.dev/npm/package/plain-crypto-js/files/4.2.1/setup.js
+
+setup.js
+malicious install script behavior
+
+CYBERSEC GURU
+https://thecybersecguru.com/news/axios-npm-package-compromised-supply-chain-attack/
+
+axios compromise overview
+supply chain attack indicators
+
+GITHUB GIST
+https://gist.github.com/joe-desimone/36061dabd2bc2513705e0d083a9673e7
+
+compiled IOC references
+malicious package indicators
+
+DATADOG
+https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-teampcp-supply-chain-campaign/
+
+litellm==1.82.7
+litellm==1.82.8
+telnyx==4.87.1
+telnyx==4.87.2
+scan.aquasecurtiy[.]org
+
+TREND MICRO
+https://www.trendmicro.com/en_us/research/26/c/inside-litellm-supply-chain-compromise.html
+
+litellm malicious versions
+rat behavior
+credential theft
+
+Resources
++===============+
+
+Websites
+https://safedep.io/axios-npm-supply-chain-compromise/
+
+https://thecybersecguru.com/news/axios-npm-package-compromised-supply-chain-attack/
+
+https://gist.github.com/joe-desimone/36061dabd2bc2513705e0d083a9673e7
+
+https://www.huntress.com/blog/supply-chain-compromise-axios-npm-package
+
+https://socket.dev/blog/axios-npm-package-compromised
+
+https://socket.dev/npm/package/plain-crypto-js/files/4.2.1/setup.js
+
+https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan
+
+https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-teampcp-supply-chain-campaign/
+
+https://www.trendmicro.com/en_us/research/26/c/inside-litellm-supply-chain-compromise.html

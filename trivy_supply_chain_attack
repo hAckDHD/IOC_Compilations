@@ -1,0 +1,68 @@
+IOC(combine)
+
+NETWORK
+hxxps://api.github[.]com/repos/aquasecurity/trivy-action
+hxxps://github[.]com/aquasecurity/trivy-action
+hxxps://raw.githubusercontent[.]com/
+hxxps://objects.githubusercontent[.]com/
+hxxps://pastebin[.]com/
+hxxps://transfer[.]sh/
+
+FILES
+trivy-action.sh
+entrypoint.sh
+install.sh
+/home/runner/work/_temp/*
+runner_temp/*
+
+PACKAGES
+aquasecurity/trivy-action@v0
+aquasecurity/trivy-action@v0.*
+
+HASHES
+N/A
+
+PERSISTENCE
+modified github action tag (v0)
+cached CI workflows
+
+BEHAVIOR
+secret exfiltration github_token env vars
+malicious script injection in CI
+curl/wget remote payload retrieval
+infostealer activity in runner
+workflow tampering
+
+IOC(source) individual
+
+SOCKET
+https://socket.dev/blog/trivy-under-attack-again-github-actions-compromise
+
+aquasecurity/trivy-action@v0
+entrypoint.sh
+trivy-action.sh
+github_token exfiltration
+
+THEHACKERNEWS 1
+https://thehackernews.com/2026/03/trivy-supply-chain-attack-triggers-self.html
+
+trivy-action compromise
+ci secret harvesting
+self propagation via workflows
+
+THEHACKERNEWS 2
+https://thehackernews.com/2026/03/trivy-hack-spreads-infostealer-via.html
+
+infostealer behavior
+env var dumping
+remote payload retrieval
+
+Resources
++===============+
+
+Websites
+https://socket.dev/blog/trivy-under-attack-again-github-actions-compromise
+
+https://thehackernews.com/2026/03/trivy-supply-chain-attack-triggers-self.html
+
+https://thehackernews.com/2026/03/trivy-hack-spreads-infostealer-via.html

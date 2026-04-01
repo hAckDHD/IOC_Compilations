@@ -1,0 +1,149 @@
+SPLUNK QUERIES BY IOC CATEGORY
+
+NETWORK IOC
+
+index=* sourcetype="*network*" (
+    dest="models.litellm.cloud" OR
+    dest="checkmarx.zone" OR
+    dest="scan.aquasecurtiy.org"
+)
+| stats count by src, dest, dest_port, protocol
+| sort - count
+
+FILE IOC
+
+index=* sourcetype="*file*" (
+    file_name="litellm_init.pth" OR
+    file_path="~/.config/sysmon/sysmon.py" OR
+    file_path="~/.config/systemd/user/sysmon.service" OR
+    file_name="setup.js"
+)
+| stats count by host, user, file_name, file_path
+| sort - count
+
+PACKAGE IOC
+
+index=* sourcetype="*package*" (
+    package_name="axios" AND (package_version="1.14.1" OR package_version="0.30.4") OR
+    package_name="plain-crypto-js" AND package_version="4.2.1" OR
+    package_name="litellm" AND (package_version="1.82.7" OR package_version="1.82.8") OR
+    package_name="telnyx" AND (package_version="4.87.1" OR package_version="4.87.2")
+)
+| stats count by host, user, package_name, package_version
+
+HASH IOC
+
+index=* sourcetype="*file*" (
+    file_hash="d2a0d5f564628773b6af7b9c11f6b86531a875bd2d186d7081ab62748a800ebb" OR
+    file_hash="ceNa7wMJnNHy1kRnNCcwJaFjWX3pORLfMh7xGL8TUjg"
+)
+| stats count by host, user, file_name, file_hash
+| sort - count
+
+PERSISTENCE IOC
+
+index=* sourcetype="*process*" (
+    process_name="node" AND command_line="*node-setup-*"
+    OR
+    file_path="~/.config/systemd/user/sysmon.service"
+)
+| stats count by host, user, process_name, command_line, file_path
+
+BEHAVIOR IOC
+
+index=* sourcetype="*process*" (
+    process_name="node" AND (command_line="*ssh*" OR command_line="*env*" OR command_line="*aws*" OR command_line="*gcloud*" OR command_line="*azure*")
+)
+| stats count by host, user, process_name, command_line
+CROWDSTRIKE QUERIES BY IOC CATEGORY
+
+NETWORK IOC
+
+{
+  "query": "event_simpleName:'NetworkConnectEvent' AND (
+        remote_hostname:'models.litellm.cloud' OR
+        remote_hostname:'checkmarx.zone' OR
+        remote_hostname:'scan.aquasecurtiy.org'
+  )",
+  "from": "2026-03-01T00:00:00Z",
+  "to": "2026-03-31T23:59:59Z"
+}
+
+FILE IOC
+
+{
+  "query": "event_simpleName:'FileWriteEvent' AND (
+        file_name:'litellm_init.pth' OR
+        file_path:'/.config/sysmon/sysmon.py' OR
+        file_path:'/.config/systemd/user/sysmon.service' OR
+        file_name:'setup.js'
+  )",
+  "from": "2026-03-01T00:00:00Z",
+  "to": "2026-03-31T23:59:59Z"
+}
+
+PACKAGE IOC
+
+{
+  "query": "event_simpleName:'ProcessRollup2' AND (
+        command_line:'*npm install axios@1.14.1*' OR
+        command_line:'*npm install axios@0.30.4*' OR
+        command_line:'*npm install plain-crypto-js@4.2.1*' OR
+        command_line:'*pip install litellm==1.82.7*' OR
+        command_line:'*pip install litellm==1.82.8*' OR
+        command_line:'*pip install telnyx==4.87.1*' OR
+        command_line:'*pip install telnyx==4.87.2*'
+  )",
+  "from": "2026-03-01T00:00:00Z",
+  "to": "2026-03-31T23:59:59Z"
+}
+
+HASH IOC
+
+{
+  "query": "file_hash:'d2a0d5f564628773b6af7b9c11f6b86531a875bd2d186d7081ab62748a800ebb' OR file_hash:'ceNa7wMJnNHy1kRnNCcwJaFjWX3pORLfMh7xGL8TUjg'",
+  "from": "2026-03-01T00:00:00Z",
+  "to": "2026-03-31T23:59:59Z"
+}
+
+PERSISTENCE IOC
+
+{
+  "query": "event_simpleName:'ProcessRollup2' AND (
+        process_name:'node.exe' AND command_line:'*node-setup-*'
+        OR command_line:'*sysmon.service*'
+  )",
+  "from": "2026-03-01T00:00:00Z",
+  "to": "2026-03-31T23:59:59Z"
+}
+
+BEHAVIOR IOC
+
+{
+  "query": "event_simpleName:'ProcessRollup2' AND (
+        process_name:'node.exe' AND command_line:'*ssh*' OR command_line:'*env*' OR command_line:'*AWS*' OR command_line:'*GCP*' OR command_line:'*AZURE*'
+  )",
+  "from": "2026-03-01T00:00:00Z",
+  "to": "2026-03-31T23:59:59Z"
+}
+Resources
++===============+
+
+Websites
+https://safedep.io/axios-npm-supply-chain-compromise/
+
+https://thecybersecguru.com/news/axios-npm-package-compromised-supply-chain-attack/
+
+https://gist.github.com/joe-desimone/36061dabd2bc2513705e0d083a9673e7
+
+https://www.huntress.com/blog/supply-chain-compromise-axios-npm-package
+
+https://socket.dev/blog/axios-npm-package-compromised
+
+https://socket.dev/npm/package/plain-crypto-js/files/4.2.1/setup.js
+
+https://www.stepsecurity.io/blog/axios-compromised-on-npm-malicious-versions-drop-remote-access-trojan
+
+https://securitylabs.datadoghq.com/articles/litellm-compromised-pypi-teampcp-supply-chain-campaign/
+
+https://www.trendmicro.com/en_us/research/26/c/inside-litellm-supply-chain-compromise.html
